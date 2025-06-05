@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [field:SerializeField] public PlayerSO Data {  get; private set; }
 
     [field: Header("Animations")]
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
@@ -12,18 +13,36 @@ public class Player : MonoBehaviour
     public PlayerController Input {  get; private set; }
     public CharacterController Controller { get; private set; }
 
+    private PlayerStateMachine stateMachine;
+
     private void Awake()
     {
         AnimationData.Initialize();
 
-        Animator = GetComponent<Animator>();
+        Animator = GetComponentInChildren<Animator>();
         Input = GetComponent<PlayerController>();
         Controller = GetComponent<CharacterController>();
+
+        stateMachine = new PlayerStateMachine(this);
+
     }
 
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        stateMachine.ChangeState(stateMachine.IdleState);
+    }
+
+    private void Update()
+    {
+        stateMachine.HandleInput();
+        stateMachine.Update();
+    }
+
+    private void FixedUpdate()
+    {
+        stateMachine.PhysicUpdate();
     }
 }
