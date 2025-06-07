@@ -31,6 +31,27 @@ public class PlayerAirData
     [field: SerializeField][field: Range(0f, 25f)] public float JumpForce { get; private set; } = 5f;
 }
 
+[Serializable]
+public class AttackInfoData
+{
+    [field: SerializeField] public string AttackName { get; private set; }
+    [field: SerializeField] public int ComboStateIndex { get; private set; }
+    [field: SerializeField][field: Range(0f, 1f)] public float ComboTransitionTime { get; private set; }
+    [field: SerializeField][field: Range(0f, 3f)] public float ForceTransitionTime { get; private set; }
+    [field: SerializeField][field: Range(-10f, 10f)] public float Force { get; private set; }
+    [field: SerializeField] public int Damage;
+    [field: SerializeField][field: Range(0f, 1f)] public float Dealing_Start_TransitionTime { get; private set; }
+    [field: SerializeField][field: Range(0f, 1f)] public float Dealing_End_TransitionTime { get; private set; }
+}
+
+[Serializable]
+public class PlayerAttackData
+{
+    [field: SerializeField] public List<AttackInfoData> AttackInfoDatas { get; private set; }
+    public int GetAttackInfoCount() { return AttackInfoDatas.Count; }
+    public AttackInfoData GetAttackInfo(int index) { return AttackInfoDatas[index]; }
+}
+
 /// <summary>
 /// 플레이어의 데이터를 담는 Scriptable Object 
 /// </summary>
@@ -40,5 +61,6 @@ public class PlayerSO : ScriptableObject
     // 지상 데이터와 하늘 데이터 값을 가져옴(다른 class와 연동)
     [field:SerializeField] public PlayerGroundData GroundData { get; private set; }
     [field:SerializeField] public PlayerAirData AirData { get; private set; }
+    [field:SerializeField] public PlayerAttackData AttackData { get; private set; }
 
 }

@@ -29,6 +29,14 @@ public class PlayerGroundedState : PlayerBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        //플레이어가 땅에 있지 않고, y값이 자꾸 내려가면=>Fall
+        if (!stateMachine.Player.Controller.isGrounded
+        && stateMachine.Player.Controller.velocity.y < Physics.gravity.y * Time.fixedDeltaTime)
+        {
+            stateMachine.ChangeState(stateMachine.FallState);
+            return;
+        }
     }
 
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
@@ -40,6 +48,12 @@ public class PlayerGroundedState : PlayerBaseState
 
         stateMachine.ChangeState(stateMachine.IdleState);
         base.OnMovementCanceled(context);
+    }
+
+    protected override void OnJumpStarted(InputAction.CallbackContext context)
+    {
+        base.OnJumpStarted(context);
+        stateMachine.ChangeState(stateMachine.JumpState);
     }
 
 }

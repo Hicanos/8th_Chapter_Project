@@ -10,6 +10,8 @@ public class PlayerStateMachine : StateMachine
     public PlayerIdleState IdleState { get; private set; }
     public PlayerWalkState WalkState { get; private set; }
     public PlayerRunState RunState { get; private set; }
+    public PlayerJumpState JumpState { get; private set; }
+    public PlayerFallState FallState { get;}
 
     //움직임에 필요한 변수 (이동 입력, 이동속도, 회전민감도, 이동속도 조정, 점프력)
     public Vector2 MovementInput { get; set; }
@@ -31,6 +33,9 @@ public class PlayerStateMachine : StateMachine
         IdleState = new PlayerIdleState(this);
         WalkState = new PlayerWalkState(this);
         RunState = new PlayerRunState(this);
+        JumpState = new PlayerJumpState(this);
+        FallState = new PlayerFallState(this);
+
 
         //메인카메라 위치 가져오기
         MainCamTransform = Camera.main.transform;
