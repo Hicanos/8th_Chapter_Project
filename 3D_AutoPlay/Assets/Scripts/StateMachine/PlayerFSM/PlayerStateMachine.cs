@@ -12,6 +12,8 @@ public class PlayerStateMachine : StateMachine
     public PlayerRunState RunState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
     public PlayerFallState FallState { get;}
+    public PlayerComboAttackState ComboAttackState { get;}
+
 
     //움직임에 필요한 변수 (이동 입력, 이동속도, 회전민감도, 이동속도 조정, 점프력)
     public Vector2 MovementInput { get; set; }
@@ -19,6 +21,9 @@ public class PlayerStateMachine : StateMachine
     public float RotationDamping { get; private set; }
     public float MovementSpeedModifier { get; set; } = 1f;
     public float JumpForce { get; set; }
+
+    public bool IsAttacking { get; set; }
+    public int ComboIndex { get; set; }
 
     // 카메라 위치
     public Transform MainCamTransform { get; set; }
@@ -35,6 +40,7 @@ public class PlayerStateMachine : StateMachine
         RunState = new PlayerRunState(this);
         JumpState = new PlayerJumpState(this);
         FallState = new PlayerFallState(this);
+        ComboAttackState = new PlayerComboAttackState(this);
 
 
         //메인카메라 위치 가져오기

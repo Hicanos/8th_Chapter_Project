@@ -28,7 +28,11 @@ public class PlayerBaseState : IState
         PlayerController input = stateMachine.Player.Input;
         input.PLActions.Move.canceled += OnMovementCanceled;
         input.PLActions.Run.started += OnRunStarted;
-        input.PLActions.Jump.started += OnJumpStarted;
+
+        stateMachine.Player.Input.PLActions.Jump.started += OnJumpStarted;
+
+        stateMachine.Player.Input.PLActions.Attack.performed += OnAttackPerformed;
+        stateMachine.Player.Input.PLActions.Attack.canceled += OnAttackCanceled;
     }
 
     protected virtual void RemoveInputActionsCallbacks()
@@ -36,7 +40,11 @@ public class PlayerBaseState : IState
         PlayerController input = stateMachine.Player.Input;
         input.PLActions.Move.canceled -= OnMovementCanceled;
         input.PLActions.Run.started -= OnRunStarted;
-        input.PLActions.Jump.started -= OnJumpStarted;
+
+        stateMachine.Player.Input.PLActions.Jump.started -= OnJumpStarted;
+
+        stateMachine.Player.Input.PLActions.Attack.performed -= OnAttackPerformed;
+        stateMachine.Player.Input.PLActions.Attack.canceled -= OnAttackCanceled;
     }
 
 
@@ -75,6 +83,16 @@ public class PlayerBaseState : IState
 
     }
 
+    protected virtual void OnAttackPerformed(InputAction.CallbackContext context)
+    {
+        stateMachine.IsAttacking = true;
+    }
+
+    protected virtual void OnAttackCanceled(InputAction.CallbackContext obj)
+    {
+        stateMachine.IsAttacking = false;
+    }
+
 
     //애니메이션 작동 on/off
     protected void StartAnimation(int animationHash)
@@ -86,7 +104,14 @@ public class PlayerBaseState : IState
     {
         stateMachine.Player.Animator.SetBool(animationHash, false);
     }
-    
+
+    protected void ForceMove()
+    {
+        stateMachine.Player.Controller.Move(stateMachine.Player.ForceReceiver.Movement * Time.deltaTime);
+
+    }
+
+
     //움직임을 감지하는 로직
     private void ReadMovementInput()
     {
@@ -147,6 +172,25 @@ public class PlayerBaseState : IState
             //Slerp=> A부터 B까지 C의 형태로 보간
         }
 
+    }
+
+    protected float GetNormalizedTime(Animator animator, string tag)
+    {
+        AnimatorStateInfo currentInfo = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo nextInfo = animator.GetNextAnimatorStateInfo(0);
+
+        if (animator.IsInTransition(0) && nextInfo.IsTag(tag))
+        {
+            return nextInfo.normalizedTime;
+        }
+        else if (!animator.IsInTransition(0) && currentInfo.IsTag(tag))
+        {
+            return currentInfo.normalizedTime;
+        }
+        else
+        {
+            return 0f;
+        }
     }
 
 }
