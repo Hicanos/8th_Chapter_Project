@@ -24,6 +24,9 @@ public class PlayerAnimationData
     [SerializeField] private string attackParameterName = "@Attack";
     [SerializeField] private string comboAttackParameterName = "ComboAttack";
 
+    //BaseAttack
+    [SerializeField] private string baseAttackParameterName = "BaseAttack";
+
 
     //땅에서의 파라미터 Hash - Hash값으로 변환하여 int로 넣는 쪽이 더 효율이 좋음.
     //변환값을 저장할 변수
@@ -40,6 +43,8 @@ public class PlayerAnimationData
     //공격할 때의 파라미터 해쉬
     public int AttackParameterHash { get; private set; }
     public int ComboAttackParameterHash { get; private set; }
+
+    public int BaseAttackParameterHash { get; private set; }
 
 
     //Player의 Awake에서 사용
@@ -59,6 +64,8 @@ public class PlayerAnimationData
         //Attack
         AttackParameterHash = Animator.StringToHash(attackParameterName);
         ComboAttackParameterHash = Animator.StringToHash(comboAttackParameterName);
+
+        BaseAttackParameterHash = Animator.StringToHash(baseAttackParameterName);
     }
 
 

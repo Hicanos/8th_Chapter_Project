@@ -2,45 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    [field:SerializeField] public PlayerSO Data {  get; private set; }
+    [field: Header("Reference")]
+
+    [field: SerializeField] public EnemySO Data { get; private set; }
 
     [field: Header("Animations")]
+
+    // 플레이어랑 동일한 애니메이션 사용
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
     public Animator Animator { get; private set; }
-    public PlayerController Input {  get; private set; }
     public CharacterController Controller { get; private set; }
-
     public ForceReceiver ForceReceiver { get; private set; }
 
-    private PlayerStateMachine stateMachine;
+    private EnemyStateMachine stateMachine;
 
-    public Health Health { get; private set; }
+    [field: SerializeField] public Weapon Weapon { get; private set; }
 
     private void Awake()
     {
         AnimationData.Initialize();
 
         Animator = GetComponentInChildren<Animator>();
-        Input = GetComponent<PlayerController>();
         Controller = GetComponent<CharacterController>();
         ForceReceiver = GetComponent<ForceReceiver>();
-        Health = GetComponent<Health>();
 
-        stateMachine = new PlayerStateMachine(this);
-
+        stateMachine = new EnemyStateMachine(this);
     }
 
-
-    void Start()
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-
         stateMachine.ChangeState(stateMachine.IdleState);
-
-        Health.OnDie += OnDie;
     }
 
     private void Update()
@@ -52,11 +47,5 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         stateMachine.PhysicUpdate();
-    }
-
-    void OnDie()
-    {
-        Animator.SetTrigger("Die");
-        enabled = false;
     }
 }
