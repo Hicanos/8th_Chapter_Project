@@ -8,6 +8,7 @@ public class PlayerGroundData
 {
     // 땅에 있을 때 데이터
     //기본 스피드와 회전 변화 크기
+    [field: SerializeField] public float EnemyChasingRange { get; private set; } = 10f; // Enemy 추적 거리
     [field: SerializeField][field: Range(0f, 25f)] public float BaseSpeed { get; private set; } = 5f;
     [field: SerializeField][field: Range(0f, 25f)] public float BaseRotationDamping { get; private set; } = 1f;
 
