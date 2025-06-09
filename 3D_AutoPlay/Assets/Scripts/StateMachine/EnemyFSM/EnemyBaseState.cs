@@ -114,11 +114,12 @@ public class EnemyBaseState : IState
     //주변에 플레이어가 있는지 확인하는 메서드
     protected bool IsInChaseRange()
     {
-        float playerDistanceSqr = (stateMachine.Target.transform.position - stateMachine.Enemy.transform.position).sqrMagnitude;
-
         // sqrMagnitude = 공격 범위 내에 있는지 없는지 비교하기 위함. 제곱으로 나눈 것.(제곱근 사용 X)
         // 제곱근 X의 이유 => 제곱근은 부하가 큼. 크기비교만이 목적이라면 제곱으로 비교해도 상관없음.
 
+        if (stateMachine.Target.IsDie) return false;
+
+        float playerDistanceSqr = (stateMachine.Target.transform.position - stateMachine.Enemy.transform.position).sqrMagnitude;
         return playerDistanceSqr <= stateMachine.Enemy.Data.PlayerChasingRange * stateMachine.Enemy.Data.PlayerChasingRange;
     }
 }

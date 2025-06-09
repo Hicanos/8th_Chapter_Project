@@ -29,7 +29,7 @@ public class Weapon : MonoBehaviour
         if(other.TryGetComponent(out ForceReceiver force))
         {
             // 공격자가 보고 있는 방향으로 넉백시켜야함.
-            Vector3 dir = (other.transform.position - myCollider.transform.position);
+            Vector3 dir = (other.transform.position - myCollider.transform.position).normalized;
             force.AddForce(dir*knockback);
         }
 
