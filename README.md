@@ -1,17 +1,39 @@
 # 8th_Chapter_Project
 8번째 챕터 개인 프로젝트
-3D Auto Play (3D 자동 사냥 게임)
+3D Auto Play (3D 자동 사냥 게임 => UIInventory)
 
 ## Scene
 ### 1. MainScene: 3D 방치형 RPG 게임 메인
 ### 2. ClassSene: 3D 심화 강의 내용 따라가기
-#### 2. 를 활용하여 1.을 완성하는 것이 목적.
+#### 2. 를 활용하여 1.을 완성하는 것이 목적.   
+   
+## => InventorySet 프로젝트로 프로젝트 변경
 
 ### 변경점=>내용을 2.에 통합, MainScene 삭제
 
 ## 필수 구현
 - [ ] 미완료
 - [x] 완료
+
+- [x] UI 구성하기   
+- [ ] Scripts스크립트   
+- [ ] UI간 전환기능   
+- [ ] 캐릭터 정보 세팅
+- [ ] UISlot 동적 생성
+- [ ] Item 데이터 준비
+- [ ] 아이템 장착
+- [ ] Status에 정보 반영
+
+## 개인
+- [x] 큰 수 계산
+
+https://github.com/user-attachments/assets/911bde2e-4404-4bb4-989b-a30084e8de53
+
+
+
+
+
+### 폐기됨
 - [ ] 기본 UI 구현(UGUI)    
 + 게임 화면에 HP, MP, 경험치 바, 현재 스테이지, 골드 및 재화 정보 표시   
    
