@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [field: Header("Reference")]
 
     [field: SerializeField] public EnemySO Data { get; private set; }
+    [field: SerializeField] public EnemyConSO ConData { get; private set; }
 
     [field: Header("Animations")]
 
@@ -16,6 +17,10 @@ public class Enemy : MonoBehaviour
     public Animator Animator { get; private set; }
     public CharacterController Controller { get; private set; }
     public ForceReceiver ForceReceiver { get; private set; }
+
+    [field: Header("Condition")]
+    public Health Health { get; private set; }
+    private UICondition uiCondition { get; set; }
 
     private EnemyStateMachine stateMachine;
 
@@ -28,6 +33,7 @@ public class Enemy : MonoBehaviour
         Animator = GetComponentInChildren<Animator>();
         Controller = GetComponent<CharacterController>();
         ForceReceiver = GetComponent<ForceReceiver>();
+        Health = GetComponent<Health>();
 
         stateMachine = new EnemyStateMachine(this);
     }
@@ -36,6 +42,8 @@ public class Enemy : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         stateMachine.ChangeState(stateMachine.IdleState);
+
+        Health.OnDie += OnDie;
     }
 
     private void Update()
@@ -47,5 +55,28 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         stateMachine.PhysicUpdate();
+    }
+    void OnDie()
+    {
+        Animator.SetTrigger("Die");
+        enabled = false;
+
+        Player player = FindObjectOfType<Player>();
+        if(player != null)
+        {
+            player.GainExp(ConData.RewardExp);
+            uiCondition.UpdateUI(player.ConditionData);
+        }
+
+        StartCoroutine("DeathTime");
+    }
+
+    //코루틴
+
+    IEnumerator DeathTime()
+    {
+        
+        yield return new WaitForSeconds(10f);
+        Destroy(this.gameObject); //캐릭터 사망 후 파괴시킴
     }
 }

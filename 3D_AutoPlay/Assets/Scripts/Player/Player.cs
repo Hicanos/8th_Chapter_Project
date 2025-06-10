@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [field:SerializeField] public PlayerSO Data {  get; private set; }
+    [field: SerializeField] public PlayerConSO ConditionData { get; set; }
 
     [field: Header("Animations")]
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     private PlayerStateMachine stateMachine;
 
     public Health Health { get; private set; }
+    [field: SerializeField] public Weapon Weapon { get; private set; }
 
     private void Awake()
     {
@@ -58,5 +60,14 @@ public class Player : MonoBehaviour
     {
         Animator.SetTrigger("Die");
         enabled = false;
+    }
+
+    public void GainExp(float amount)
+    {
+        ConditionData.AddExp(amount);
+    }
+    public void GainCoin(int amount)
+    {
+        ConditionData.AddCoin(amount);
     }
 }

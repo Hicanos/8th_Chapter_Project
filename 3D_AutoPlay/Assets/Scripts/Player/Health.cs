@@ -6,15 +6,26 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private PlayerConSO playerCondition;
+    [SerializeField] private ConditionSO conditionSO; // PlayerConSO 또는 EnemyConSO 할당
+
     private int health;
+    public int CurrentHealth => health;
     public event Action OnDie;
 
     public bool IsDie = false;
 
     void Start()
     {
-        health = maxHealth;
+        if (conditionSO != null)
+        {
+            maxHealth = conditionSO.MaxHP;
+        }
+        else
+        {
+            Debug.LogWarning("ConditionSO가 할당되지 않았습니다.");
+            maxHealth = 100; //기본값 할당
+        }
+            health = maxHealth;
     }
 
 

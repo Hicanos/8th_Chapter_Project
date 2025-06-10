@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance;
+    private static UIManager Instance;
 
     [SerializeField] public GameObject UIInventory; //차후 UIInventory로 변경
     [SerializeField] public GameObject UIEquipment; // 장비창
@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         if(Instance == null) Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this.gameObject);
     }
     void Start()
     {
@@ -30,4 +30,11 @@ public class UIManager : MonoBehaviour
     {
         
     }
+
+    // Dictionary의 UI 중 하나가 켜지면, 다른 UI로 향하는 버튼은 감춰짐
+    // 단, 뒤로가기 버튼은 살아있어야 함.
+
+
+
+
 }

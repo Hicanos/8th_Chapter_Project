@@ -6,6 +6,7 @@ public class PlayerComboAttackState : PlayerAttackState
 {
     private bool alreadyAppliedCombo;
     private bool alreadyApplyForce;
+    bool alreadyAppliedDealing;
 
     AttackInfoData attackInfoData;
 
@@ -24,6 +25,9 @@ public class PlayerComboAttackState : PlayerAttackState
         int comboIndex = stateMachine.ComboIndex;
         attackInfoData = stateMachine.Player.Data.AttackData.GetAttackInfo(comboIndex);
         stateMachine.Player.Animator.SetInteger("Combo", comboIndex);
+
+        alreadyApplyForce = false;
+        alreadyAppliedDealing = false;
     }
 
     public override void Exit() 
@@ -45,10 +49,11 @@ public class PlayerComboAttackState : PlayerAttackState
         if (normalizedTime < 1f)
         {
             if (normalizedTime >= attackInfoData.ForceTransitionTime)
-                TryApplyForce();  // TryApplyForce 함수 먼저 작성
+                TryApplyForce();  
 
             if (normalizedTime >= attackInfoData.ComboTransitionTime)
-                TryComboAttack(); // TryComboAttack 함수 먼저 작성
+                TryComboAttack();
+            
         }
         else
         {
