@@ -1,10 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 [CreateAssetMenu(fileName = "Character", menuName = "Characters/Player")]
 public class PlayerData : ScriptableObject
 {
+    public event Action OnStatusChanged; //스탯 변경 시 발생할 이벤트액션
+
+
     // 레벨, 체, 마, 공, 방, 속
     [SerializeField] private int level;
     [SerializeField] private int maxHP;
@@ -22,4 +27,36 @@ public class PlayerData : ScriptableObject
     public int Deffense => deffense;
     public float Speed => speed;
     public float Sprint => sprint;
+
+
+    public void SetLevel(int value)
+    {
+        level = value;
+        OnStatusChanged?.Invoke();
+    }
+
+    public void SetMaxHP(int value)
+    {
+        maxHP = value;
+        OnStatusChanged?.Invoke();
+    }
+
+    public void SetMaxMP(int value)
+    {
+        maxMP = value;
+        OnStatusChanged?.Invoke();
+    }
+
+    public void SetAttack(int value)
+    {
+        attack = value;
+        OnStatusChanged?.Invoke();
+
+    }
+
+    public void SetDeffense(int value)
+    {
+        deffense = value;
+        OnStatusChanged?.Invoke();
+    }
 }

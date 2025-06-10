@@ -9,7 +9,7 @@ public class UIClicker : MonoBehaviour
     [SerializeField] private TMP_Text coinTxt;
     [SerializeField] private long DebugCoin; // 큰 수 테스트용 코인
 
-
+    [SerializeField] private ItemBase[] items;
     public long CurCoin => coin;
 
     public void Start()
@@ -33,7 +33,10 @@ public class UIClicker : MonoBehaviour
         UpdateUI();
     }
 
+    public void GetItem()
+    {
 
+    }
 
 
     

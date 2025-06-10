@@ -20,12 +20,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIMainMenu mainMenu;
     [SerializeField] private UIStatus uiStatus;
     [SerializeField] private UIInventory inventory;
+    [SerializeField] private UIShop shop;
 
-    // public 프로퍼티로 각각의 UI에 접근
+    // public 프로퍼티로 각각의 UI에 접근 => 차후 배열 혹은 Dictionary의 형태로 변경하여 전체적인 시트 수정 방지
+
     public UIClicker Clicker { get { return clicker; } }
     public UIMainMenu MainMenu { get { return mainMenu; } }
     public UIStatus Status { get { return uiStatus; } }
     public UIInventory Inventory { get { return inventory; } }
+    public UIShop Shop { get { return shop; } }
 
     private void Awake()
     {
@@ -47,6 +50,7 @@ public class UIManager : MonoBehaviour
         mainMenu.gameObject.SetActive(false);
         uiStatus.gameObject.SetActive(false);
         inventory.gameObject.SetActive(false);
+        shop.gameObject.SetActive(false);
 
         // 선택한 UI 활성화
         uiToActivate.SetActive(true);

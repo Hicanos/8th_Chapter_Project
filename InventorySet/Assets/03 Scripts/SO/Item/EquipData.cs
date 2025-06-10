@@ -21,7 +21,6 @@ public class EquipData : ItemBase
     [SerializeField] private int itemAttack;
     [SerializeField] private int itemDeffensce;
     [SerializeField] private int itemSpeed;
-    [SerializeField] private int price;
     [SerializeField] private EquipParts equipParts;
     [SerializeField] private int coinBonus;
     
@@ -30,8 +29,7 @@ public class EquipData : ItemBase
     public int ItemAttack => itemAttack;
     public int ItemDeffensce => itemDeffensce;
     public int ItemSpeed => itemSpeed; 
-    public int Price => price;
-    public int SellPrice => (int)(price * 0.8); 
+
     public int CoinBonus => coinBonus; 
 
 }
