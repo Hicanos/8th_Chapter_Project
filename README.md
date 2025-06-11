@@ -15,12 +15,19 @@
 - [ ] 미완료
 - [x] 완료
 
+
+
+
+https://github.com/user-attachments/assets/4194964b-ec41-4a44-8727-ef2acaa2dc0e
+
+
+
 - [x] UI 구성하기   
-- [ ] Scripts스크립트   
-- [ ] UI간 전환기능   
-- [ ] 캐릭터 정보 세팅
-- [ ] UISlot 동적 생성
-- [ ] Item 데이터 준비
+- [x] Scripts스크립트   
+- [x] UI간 전환기능   
+- [x] 캐릭터 정보 세팅
+- [x] UISlot 동적 생성
+- [X] Item 데이터 준비
 - [ ] 아이템 장착
 - [ ] Status에 정보 반영
 
