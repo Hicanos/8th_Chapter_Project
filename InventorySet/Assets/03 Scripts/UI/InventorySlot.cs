@@ -96,6 +96,7 @@ public class InventorySlot : Slot
             EquipOrStack.text = isEquiped ? "Equip" : "";
             useText.text = isEquiped ? "해제하기" : "장착하기";
             useButton.interactable = true;
+            
         }
         else if (item is ConsumeData)
         {

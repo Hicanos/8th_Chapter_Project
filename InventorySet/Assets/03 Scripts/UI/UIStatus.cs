@@ -44,7 +44,7 @@ public class UIStatus : MonoBehaviour
         lvText.text = $"LV: {data.Level}";
         hpText.text = $"HP: {data.MaxHP}";
         mpText.text = $"MP: {data.MaxMP}";
-        attackText.text = $"ATK: {data.Attack}";
-        deffenseText.text = $"DEF: {data.Deffense}";
+        attackText.text = $"ATK: {data.Attack} (+{data.TotalAttack - data.Attack})";
+        deffenseText.text = $"DEF: {data.Deffense} (+{data.TotalDeffense - data.Deffense})";
     }
 }

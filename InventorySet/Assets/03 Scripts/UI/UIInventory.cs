@@ -147,6 +147,11 @@ public class UIInventory : MonoBehaviour
         else
             exist.isEquipped = true;
 
+        //갱신이 완료되었다면 PlayerData에도 알려줌
+        var player = FindObjectOfType<Player>();
+        if (player != null && player.playerData != null)
+            player.playerData.StatusChanged();
+
         UpdateUI();
     }
 
@@ -159,6 +164,11 @@ public class UIInventory : MonoBehaviour
         var equip = Equipments.Find(e => e.itemId == id);
         if (equip != null)
             equip.isEquipped = false;
+
+        //갱신이 완료되었다면 PlayerData에도 알려줌
+        var player = FindObjectOfType<Player>();
+        if (player != null && player.playerData != null)
+            player.playerData.StatusChanged();
 
         UpdateUI();
     }

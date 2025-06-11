@@ -31,7 +31,7 @@ public class Slot : MonoBehaviour
     {
         if(item is EquipData equip)
         {
-            description = $"공격력: {equip.ItemAttack}| 방어력: {equip.ItemDeffensce}|가격:{item.SellPrice}";
+            description = $"공격력: {equip.ItemAttack}| 방어력: {equip.ItemDeffense}|가격:{item.SellPrice}";
         }
         else if (item is ConsumeData consume)
         {

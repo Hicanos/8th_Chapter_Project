@@ -59,4 +59,52 @@ public class PlayerData : ScriptableObject
         deffense = value;
         OnStatusChanged?.Invoke();
     }
+
+    public void StatusChanged()
+    {
+        OnStatusChanged?.Invoke();
+    }
+
+
+    //총 공격력과 총 방어력을 가져오는 프로퍼티
+
+    public int TotalAttack
+    {
+        get
+        {
+            int total = Attack;
+            // 장비 공격력 합산
+            foreach (var equip in UIManager.Instance.Inventory.Equipments)
+            {
+                if (equip.isEquipped) //장비중인 아이템이 있다면
+                {
+                    // Items 딕셔너리에서 아이템 정보 가져오기
+                    if (UIManager.Instance.Inventory.Items.TryGetValue(equip.itemId, out var entry) && entry.item is EquipData equipData)
+                    {
+                        total += equipData.ItemAttack;
+                    }
+                }
+            }
+            return total;
+        }
+    }
+
+    public int TotalDeffense
+    {
+        get
+        {
+            int total = Deffense;
+            foreach (var equip in UIManager.Instance.Inventory.Equipments)
+            {
+                if (equip.isEquipped)
+                {
+                    if (UIManager.Instance.Inventory.Items.TryGetValue(equip.itemId, out var entry) && entry.item is EquipData equipData)
+                    {
+                        total += equipData.ItemDeffense; 
+                    }
+                }
+            }
+            return total;
+        }
+    }
 }

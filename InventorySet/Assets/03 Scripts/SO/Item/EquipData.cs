@@ -19,7 +19,7 @@ public class EquipData : ItemBase
     [Header("장비설정")]
     [SerializeField] private int itemLV; // 아이템 레벨 =>강화 시 상승
     [SerializeField] private int itemAttack;
-    [SerializeField] private int itemDeffensce;
+    [SerializeField] private int itemDeffense;
     [SerializeField] private int itemSpeed;
     [SerializeField] private EquipParts equipParts;
     [SerializeField] private int coinBonus;
@@ -27,7 +27,7 @@ public class EquipData : ItemBase
 
     public EquipParts EquipPart => equipParts;
     public int ItemAttack => itemAttack;
-    public int ItemDeffensce => itemDeffensce;
+    public int ItemDeffense => itemDeffense;
     public int ItemSpeed => itemSpeed; 
 
     public int CoinBonus => coinBonus; 
