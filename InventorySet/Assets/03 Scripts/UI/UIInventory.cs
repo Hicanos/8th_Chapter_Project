@@ -15,6 +15,10 @@ public class UIInventory : MonoBehaviour
     // 아이템 ID와 (아이템 정보, 보유 개수) 쌍으로 관리
     public Dictionary<int, (ItemBase item, int count)> Items = new Dictionary<int, (ItemBase, int)>();
 
+    // 장비 장착 상태 관리
+    public List<Equipment> Equipments = new List<Equipment>();
+
+    //아이템 슬롯 관리
     private List<GameObject> slotObjects = new List<GameObject>();
 
     public void UpdateUI()
@@ -26,6 +30,8 @@ public class UIInventory : MonoBehaviour
         }
         slotObjects.Clear();
 
+
+        //아이템 리스트에 맞춰 슬롯 생성
         foreach (var pair in Items)
         {
             GameObject slotObj = Instantiate(InventorySlot, Parentobject.transform);
@@ -35,7 +41,13 @@ public class UIInventory : MonoBehaviour
             InventorySlot slot = slotObj.GetComponent<InventorySlot>();
             if (slot != null)
             {
-                slot.SetItem(pair.Value.item);
+                bool equipped = false;
+                // 장비 아이템이면 장착 상태 확인
+                if (pair.Value.item is EquipData)
+                {
+                    equipped = Equipments.Exists(e => e.itemId == pair.Key && e.isEquipped);
+                }
+                slot.SetItem(pair.Value.item, pair.Value.count, equipped);
             }
         }
     }
@@ -88,8 +100,9 @@ public class UIInventory : MonoBehaviour
                 }
                 else
                 {
-                    // 개수가 1 이하가 되면 완전히 제거
+                    // 개수가 1 미만이 되면 완전히 제거
                     Items.Remove(id);
+
                 }
             }
             else
@@ -99,5 +112,65 @@ public class UIInventory : MonoBehaviour
             }
             UpdateUI();
         }
+    }
+
+    //아이템 사용
+    public void UseItem(InventorySlot slot, ItemBase item)
+    {        
+        UIClicker clicker = UIManager.Instance.Clicker;
+        clicker.UseItem(item);
+
+        // 인벤토리에서 수량 감소
+        int id = int.TryParse(item.itemID, out var parsedId) ? parsedId : GetItemId(item);
+        RemoveItem(id, 1);
+    }
+
+    // 아이템 장착/해제
+
+    // 장비 장착
+    public void EquipItem(InventorySlot slot, ItemBase item)
+    {
+        if (!(item is EquipData newEquipData)) return;
+        int id = GetItemId(item);
+
+        // 동일 타입의 장비가 이미 장착되어 있다면 해제
+        foreach (var equip in Equipments)
+        {
+            if (equip.isEquipped && equip.parts == newEquipData.EquipPart)
+                equip.isEquipped = false;
+        }
+
+        // 장착 상태 등록 또는 갱신
+        var exist = Equipments.Find(e => e.itemId == id);
+        if (exist == null)
+            Equipments.Add(new Equipment(id, true, newEquipData.EquipPart));
+        else
+            exist.isEquipped = true;
+
+        UpdateUI();
+    }
+
+    // 장비 해제
+    public void UnequipItem(InventorySlot slot, ItemBase item)
+    {
+        int id = int.TryParse(item.itemID, out var parsedId) ? parsedId : GetItemId(item);
+
+        // 장착중인 아이템에서 해당 장비 찾기
+        var equip = Equipments.Find(e => e.itemId == id);
+        if (equip != null)
+            equip.isEquipped = false;
+
+        UpdateUI();
+    }
+
+
+    private int GetItemId(ItemBase item)
+    {
+        foreach (var pair in Items)
+        {
+            if (pair.Value.item == item)
+                return pair.Key;
+        }
+        return -1;
     }
 }

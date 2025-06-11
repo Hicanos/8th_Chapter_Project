@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808dee0b57d57d1458e44375a3637952, type: 3}
   m_Name: Helmet
   m_EditorClassIdentifier: 
-  itemID: 1
+  itemID: 2
   itemName: "\uD5EC\uBA67"
-  isStackable: 1
+  price: 500
+  isStackable: 0
   maxStackSize: 20
   itemLV: 0
   itemAttack: 0
   itemDeffensce: 10
   itemSpeed: 0
-  price: 500
   equipParts: 0
   coinBonus: 5

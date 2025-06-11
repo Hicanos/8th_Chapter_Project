@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5275776c9d465047acd8e24e1a79b68, type: 3}
   m_Name: Potion
   m_EditorClassIdentifier: 
-  itemID: 
-  itemName: 
-  price: 0
+  itemID: 1
+  itemName: "\uD3EC\uC158"
+  price: 10
   isStackable: 1
   maxStackSize: 20
   duration: 0
-  amount: 0
+  amount: 1.2

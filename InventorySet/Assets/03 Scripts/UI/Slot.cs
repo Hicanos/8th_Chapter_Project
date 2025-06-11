@@ -12,13 +12,13 @@ public class Slot : MonoBehaviour
     [SerializeField] private string description;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text descriptionText;
-    [SerializeField] private TMP_Text EquipOrStack; //장비라면 Equip, 스택 아이템이라면 숫자
+    [SerializeField] protected TMP_Text EquipOrStack; //장비라면 Equip, 스택 아이템이라면 숫자
 
     [Header("버튼 할당")]
     [SerializeField] protected Button selectButton;
     [SerializeField] protected Button cancelBtn;
 
-    public virtual void SetItem(ItemBase item)
+    public void SetItem(ItemBase item)
     {
         itemName = item.name;
         ItemDescription(item);
@@ -31,11 +31,11 @@ public class Slot : MonoBehaviour
     {
         if(item is EquipData equip)
         {
-            description = $"Attack: {equip.ItemAttack}\nDEF: {equip.ItemDeffensce}\nPrice:{item.SellPrice}";
+            description = $"공격력: {equip.ItemAttack}| 방어력: {equip.ItemDeffensce}|가격:{item.SellPrice}";
         }
         else if (item is ConsumeData consume)
         {
-            description = $"CoinBonus:{consume.Amount}\nDuration:{consume.Duration}\nPrice:{item.SellPrice}";
+            description = $"코인 증가:{consume.Amount}|지속 시간:{consume.Duration}|가격:{item.SellPrice}";
         }
 
             return description;
